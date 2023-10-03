@@ -1,5 +1,6 @@
 import {createGlobalStyle} from "styled-components";
-import bgImg from "../assets/background/commentsBg.jpg";
+
+import {baseTheme} from "./theme";
 
 export default createGlobalStyle`
   * {
@@ -7,6 +8,8 @@ export default createGlobalStyle`
   }
   
   body {
-    background-image: url(${bgImg});
+    background-image: url(${baseTheme.background.image});
+    color: ${baseTheme.colors.primary};
+    font-family: 'Lato', sans-serif;
   }
 `;
