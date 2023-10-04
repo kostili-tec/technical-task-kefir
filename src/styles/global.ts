@@ -9,6 +9,7 @@ export default createGlobalStyle`
   
   body {
     background-image: url(${baseTheme.background.image});
+    background-attachment: fixed;
     color: ${baseTheme.colors.primary};
     font-family: 'Lato', sans-serif;
   }
