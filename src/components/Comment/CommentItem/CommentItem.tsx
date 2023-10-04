@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import {ModifiedComment, ResponseAuthor} from "../../../shared/types/types";
 import {LikeIcon} from "../../Icons/LikeIcon";
+import {formatData} from "../../../shared/utils/dateFormater";
+import {baseTheme} from "../../../styles/theme";
 
 interface CommentItemProps extends ModifiedComment {
     getAuthor: (id: number) => ResponseAuthor | undefined;
@@ -19,6 +21,10 @@ const AvatarContainer = styled.div`
 const Avatar = styled.img`
     width: 100%;
     height: auto;
+`;
+
+const Date = styled.p`
+    color: ${baseTheme.colors.secondary};
 `;
 
 const UpContainer = styled.div`
@@ -49,18 +55,18 @@ export const CommentItem: FC<CommentItemProps> = ({
 }) => {
     const authorInfo = getAuthor(author);
     const marginSize = depth === 1 ? 34 : 0;
+    const formatedData = formatData(created);
     return (
         <div style={{marginLeft: marginSize, marginTop: "2rem"}}>
             <UpContainer>
                 {authorInfo && (
                     <AvatarContainer>
-                        {" "}
                         <Avatar src={authorInfo.avatar} />
                     </AvatarContainer>
                 )}
                 <div style={{flexGrow: 1}}>
                     {authorInfo && <p>{authorInfo.name}</p>}
-                    {authorInfo && <p>{String(created)}</p>}
+                    {authorInfo && <Date>{formatedData}</Date>}
                 </div>
                 <LikesContainer>
                     <LikeIcon />
