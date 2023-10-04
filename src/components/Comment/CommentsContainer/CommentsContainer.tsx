@@ -6,6 +6,7 @@ import {CommentItem} from "../CommentItem/CommentItem";
 import getAuthorsRequest from "../../../api/authors/getAuthorsRequest";
 import getCommentsRequest from "../../../api/comments/getCommentsRequest";
 import createCommentTree from "../../../shared/utils/createComentTree";
+import { LoadButton } from "../../LoadButton/LoadButton";
 
 const Container = styled.div`
     max-width: 562px;
@@ -27,7 +28,6 @@ export const CommentsContainer = () => {
             const commentsReposonse = await getCommentsRequest(page);
             const modifiedComments = createCommentTree(commentsReposonse.data);
             setComments(modifiedComments);
-            console.log("modifiedComments", modifiedComments);
         };
         const getAuthors = async () => {
             const authorsResponse = await getAuthorsRequest();
@@ -36,7 +36,7 @@ export const CommentsContainer = () => {
         };
         getComments();
         getAuthors();
-    }, []);
+    }, [page]);
     return (
         <Container>
             {comments &&
@@ -47,6 +47,7 @@ export const CommentsContainer = () => {
                         getAuthor={findAuthor}
                     />
                 ))}
+                <LoadButton />
         </Container>
     );
 };
