@@ -1,16 +1,10 @@
 import {FC} from "react";
 import styled from "styled-components";
 
-import {ResponseAuthor} from "../../../shared/types/types";
-import { LikeIcon } from "../../Icons/LikeIcon";
+import {ModifiedComment, ResponseAuthor} from "../../../shared/types/types";
+import {LikeIcon} from "../../Icons/LikeIcon";
 
-interface CommentItemProps {
-    id: number;
-    created: string | Date;
-    text: string;
-    author: number;
-    parent: null | number;
-    likes: number;
+interface CommentItemProps extends ModifiedComment {
     getAuthor: (id: number) => ResponseAuthor | undefined;
 }
 
@@ -42,7 +36,7 @@ const LikesContainer = styled.div`
     font-size: 15px;
     font-weight: 700;
     line-height: 150%; /* 22.5px */
-`
+`;
 
 export const CommentItem: FC<CommentItemProps> = ({
     author,
@@ -50,10 +44,13 @@ export const CommentItem: FC<CommentItemProps> = ({
     getAuthor,
     created,
     likes,
+    replies,
+    depth,
 }) => {
     const authorInfo = getAuthor(author);
+    const marginSize = depth === 1 ? 34 : 0;
     return (
-        <div>
+        <div style={{marginLeft: marginSize, marginTop: "2rem"}}>
             <UpContainer>
                 {authorInfo && (
                     <AvatarContainer>
@@ -71,6 +68,14 @@ export const CommentItem: FC<CommentItemProps> = ({
                 </LikesContainer>
             </UpContainer>
             <p style={{paddingLeft: 88}}>{text}</p>
+            {replies &&
+                replies.map((reply) => (
+                    <CommentItem
+                        key={reply.id}
+                        getAuthor={getAuthor}
+                        {...reply}
+                    />
+                ))}
         </div>
     );
 };

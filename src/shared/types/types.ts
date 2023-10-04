@@ -24,6 +24,11 @@ export type ResponseComment = {
     pagination: ResponseCommentPagination;
 };
 
+export interface ModifiedComment extends ResponseCommentData {
+    depth: number;
+    replies: [] | ModifiedComment[];
+}
+
 export enum ApiUrls {
     AUTHORS = "/api/authors",
     COMMENTS = "/api/comments",
