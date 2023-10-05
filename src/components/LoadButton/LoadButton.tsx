@@ -5,9 +5,16 @@ import {FC} from "react";
 
 interface LoadButtonProps {
     onClick: () => Promise<void>;
+    isVisible: boolean;
+    isDisabled: boolean;
 }
 
-const Button = styled.button`
+interface LoadButtonStyledProps {
+    // $display: 'none' | 'block';
+    $isVisible: boolean;
+}
+
+const Button = styled.button<LoadButtonStyledProps>`
     width: 234px;
     height: 36px;
     border: none;
@@ -21,8 +28,13 @@ const Button = styled.button`
     line-height: 22px; /* 137.5% */
     margin: 60px auto 64px;
     cursor: pointer;
+    display: ${({$isVisible}) => ($isVisible ? "block" : "none")};
 `;
 
-export const LoadButton: FC<LoadButtonProps> = ({onClick}) => {
-    return <Button onClick={onClick}>Load more</Button>;
+export const LoadButton: FC<LoadButtonProps> = ({onClick, isVisible, isDisabled}) => {
+    return (
+        <Button $isVisible={isVisible} disabled={isDisabled} onClick={onClick}>
+            Load more
+        </Button>
+    );
 };

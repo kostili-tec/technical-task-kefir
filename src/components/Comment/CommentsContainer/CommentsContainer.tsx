@@ -25,6 +25,10 @@ export const CommentsContainer = () => {
     const [comments, setComments] = useState<ModifiedComment[]>([]);
     const [pagination, setPagination] = useState<ResponseCommentPagination>();
     const [authors, setAuthors] = useState<ResponseAuthor[]>([]);
+    const [buttonProperties, setButtonProperties] = useState({
+        isDisabled: false,
+        isVisible: false
+    });
 
     const startPage = 1;
 
@@ -33,15 +37,21 @@ export const CommentsContainer = () => {
         cachedAuthors.find((author) => author.id === id);
 
     const handleLoadMoreComments = async () => {
-        if (pagination && pagination.page <= pagination.total_pages) {
-            const nextPage = pagination.page + 1;
-            const fetchedComments = await fetchCommentsWithRetry(nextPage);
-            if (fetchedComments) {
-                const modifiedComments = createCommentTree(
-                    fetchedComments.data,
-                );
-                setComments((state) => [...state, ...modifiedComments]);
-                setPagination(fetchedComments.pagination);
+        setButtonProperties((state) => ({...state, isDisabled: true}));
+        if (pagination) {
+            const {page, total_pages} = pagination;
+            if (page < total_pages) {
+                const nextPage = pagination.page + 1;
+                const fetchedComments = await fetchCommentsWithRetry(nextPage);
+                if (fetchedComments) {
+                    const {data, pagination} = fetchedComments;
+                    const modifiedComments = createCommentTree(data);
+                    setComments((state) => [...state, ...modifiedComments]);
+                    setPagination(pagination);
+                    setButtonProperties((state) => ({...state, isDisabled: false}));
+                    if (pagination.page === total_pages)
+                    setButtonProperties((state) => ({...state, isVisible: false}));
+                }
             }
         }
     };
@@ -53,6 +63,9 @@ export const CommentsContainer = () => {
             const modifiedComments = createCommentTree(commentsReposonse.data);
             setComments(modifiedComments);
             setPagination(commentsReposonse.pagination);
+            const {page, total_pages} = commentsReposonse.pagination;
+            if (page < total_pages) setButtonProperties((state) => ({...state, isVisible: true}));
+            else setButtonProperties((state) => ({...state, isVisible: false}));
         };
         const getAuthors = async () => {
             const authorsResponse = await getAuthorsRequest();
@@ -73,7 +86,11 @@ export const CommentsContainer = () => {
                         getAuthor={findAuthor}
                     />
                 ))}
-            <LoadButton onClick={handleLoadMoreComments} />
+            <LoadButton
+                isVisible={buttonProperties.isVisible}
+                isDisabled={buttonProperties.isDisabled}
+                onClick={handleLoadMoreComments}
+            />
         </Container>
     );
 };
