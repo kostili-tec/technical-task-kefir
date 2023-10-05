@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import {useState, useEffect, useMemo} from "react";
 
-import {ModifiedComment, ResponseAuthor} from "../../../shared/types/types";
+import {
+    ModifiedComment,
+    ResponseAuthor,
+    ResponseCommentPagination,
+    ResponseComments,
+} from "../../../shared/types/types";
 import {CommentItem} from "../CommentItem/CommentItem";
 import getAuthorsRequest from "../../../api/authors/getAuthorsRequest";
 import getCommentsRequest from "../../../api/comments/getCommentsRequest";
 import createCommentTree from "../../../shared/utils/createComentTree";
-import { LoadButton } from "../../LoadButton/LoadButton";
+import {LoadButton} from "../../LoadButton/LoadButton";
+import fetchCommentsWithRetry from "../../../shared/utils/fetchCommentsWithRetry";
 
 const Container = styled.div`
     max-width: 562px;
@@ -17,17 +23,36 @@ const Container = styled.div`
 
 export const CommentsContainer = () => {
     const [comments, setComments] = useState<ModifiedComment[]>([]);
+    const [pagination, setPagination] = useState<ResponseCommentPagination>();
     const [authors, setAuthors] = useState<ResponseAuthor[]>([]);
+
+    const startPage = 1;
 
     const cachedAuthors = useMemo(() => authors, [authors]);
     const findAuthor = (id: number) =>
         cachedAuthors.find((author) => author.id === id);
-    let page = 1;
+
+    const handleLoadMoreComments = async () => {
+        if (pagination && pagination.page <= pagination.total_pages) {
+            const nextPage = pagination.page + 1;
+            const fetchedComments = await fetchCommentsWithRetry(nextPage);
+            if (fetchedComments) {
+                const modifiedComments = createCommentTree(
+                    fetchedComments.data,
+                );
+                setComments((state) => [...state, ...modifiedComments]);
+                setPagination(fetchedComments.pagination);
+            }
+        }
+    };
+
     useEffect(() => {
         const getComments = async () => {
-            const commentsReposonse = await getCommentsRequest(page);
+            const commentsReposonse: ResponseComments =
+                await getCommentsRequest(startPage);
             const modifiedComments = createCommentTree(commentsReposonse.data);
             setComments(modifiedComments);
+            setPagination(commentsReposonse.pagination);
         };
         const getAuthors = async () => {
             const authorsResponse = await getAuthorsRequest();
@@ -36,7 +61,8 @@ export const CommentsContainer = () => {
         };
         getComments();
         getAuthors();
-    }, [page]);
+    }, []);
+
     return (
         <Container>
             {comments &&
@@ -47,7 +73,7 @@ export const CommentsContainer = () => {
                         getAuthor={findAuthor}
                     />
                 ))}
-                <LoadButton />
+            <LoadButton onClick={handleLoadMoreComments} />
         </Container>
     );
 };

@@ -13,13 +13,13 @@ export interface ResponseAuthor {
     avatar: string;
 }
 
-interface ResponseCommentPagination {
+export interface ResponseCommentPagination {
     page: number;
     size: number;
     total_pages: number;
 }
 
-export type ResponseComment = {
+export type ResponseComments = {
     data: ResponseCommentData[];
     pagination: ResponseCommentPagination;
 };
