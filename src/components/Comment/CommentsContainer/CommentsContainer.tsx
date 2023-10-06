@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {useState, useEffect, useMemo} from "react";
 
 import {
-    ModifiedComment,
     ResponseAuthor,
     ResponseCommentData,
     ResponseCommentPagination,
@@ -11,10 +10,10 @@ import {
 import {CommentItem} from "../CommentItem/CommentItem";
 import getAuthorsRequest from "../../../api/authors/getAuthorsRequest";
 import getCommentsRequest from "../../../api/comments/getCommentsRequest";
-import createCommentTree from "../../../shared/utils/createComentTree";
 import {LoadButton} from "../../LoadButton/LoadButton";
 import fetchCommentsWithRetry from "../../../shared/utils/fetchCommentsWithRetry";
 import {CommentsTotal} from "../CommentsTotal/CommentsTotal";
+import {sortCommentsByParent} from "../../../shared/utils/sortComments";
 
 const Container = styled.div`
     max-width: 562px;
@@ -24,7 +23,7 @@ const Container = styled.div`
 `;
 
 export const CommentsContainer = () => {
-    const [comments, setComments] = useState<ModifiedComment[]>([]);
+    const [comments, setComments] = useState<ResponseCommentData[]>([]);
     const [pagination, setPagination] = useState<ResponseCommentPagination>();
     const [authors, setAuthors] = useState<ResponseAuthor[]>([]);
     const [buttonProperties, setButtonProperties] = useState({
@@ -72,9 +71,9 @@ export const CommentsContainer = () => {
 
                 if (fetchedComments) {
                     const {data, pagination} = fetchedComments;
-                    const modifiedComments = createCommentTree(data);
+                    const sortedComments = sortCommentsByParent(data);
 
-                    setComments((state) => [...state, ...modifiedComments]);
+                    setComments((state) => [...state, ...sortedComments]);
                     calculateComments(data);
                     calculateLikes(data);
                     setPagination(pagination);
@@ -97,9 +96,9 @@ export const CommentsContainer = () => {
         const getComments = async () => {
             const commentsReposonse: ResponseComments =
                 await getCommentsRequest(startPage);
-            const modifiedComments = createCommentTree(commentsReposonse.data);
+            const sortedComments = sortCommentsByParent(commentsReposonse.data);
 
-            setComments(modifiedComments);
+            setComments(sortedComments);
             setPagination(commentsReposonse.pagination);
 
             const currentCountLikes = commentsReposonse.data.reduce(
