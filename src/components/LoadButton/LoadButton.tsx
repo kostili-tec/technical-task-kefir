@@ -10,7 +10,6 @@ interface LoadButtonProps {
 }
 
 interface LoadButtonStyledProps {
-    // $display: 'none' | 'block';
     $isVisible: boolean;
 }
 
@@ -31,7 +30,11 @@ const Button = styled.button<LoadButtonStyledProps>`
     display: ${({$isVisible}) => ($isVisible ? "block" : "none")};
 `;
 
-export const LoadButton: FC<LoadButtonProps> = ({onClick, isVisible, isDisabled}) => {
+export const LoadButton: FC<LoadButtonProps> = ({
+    onClick,
+    isVisible,
+    isDisabled,
+}) => {
     return (
         <Button $isVisible={isVisible} disabled={isDisabled} onClick={onClick}>
             Load more
