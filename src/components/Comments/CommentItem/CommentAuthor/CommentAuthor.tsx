@@ -20,21 +20,15 @@ const AuthorInfoContainer = styled.div`
     align-items: center;
 `;
 
-const AvatarContainer = styled.div`
+const Avatar = styled.img`
     width: 68px;
     height: 68px;
-    position: relative;
+    object-fit: cover;
     border-radius: 50%;
-    overflow: hidden;
     @media ${({theme}) => theme.media.medium} {
         width: 40px;
         height: 40px;
     }
-`;
-
-const Avatar = styled.img`
-    width: 100%;
-    height: auto;
 `;
 
 const CommentHeader = styled.div`
@@ -67,9 +61,7 @@ export const CommentAuthor: FC<CommentAuthorProps> = ({
     const formatedData = formatData(created);
     return (
         <AuthorInfoContainer>
-            <AvatarContainer>
-                <Avatar src={authorAvatar} alt={authorName} />
-            </AvatarContainer>
+            <Avatar src={authorAvatar} alt={authorName} />
             <CommentHeader>
                 <AuthorTitle>{authorName}</AuthorTitle>
                 <Date>{formatedData}</Date>
