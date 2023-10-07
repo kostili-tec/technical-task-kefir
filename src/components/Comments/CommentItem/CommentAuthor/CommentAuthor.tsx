@@ -1,15 +1,16 @@
 import {FC} from "react";
 import styled from "styled-components";
 
-import {LikeIcon} from "../../../Icons/LikeIcon";
 import {baseTheme} from "src/styles/theme";
 import {formatData} from "src/shared/utils/dateFormater";
 import {ResponseAuthor} from "src/shared/types/types";
+import {CommentLikes} from "../../CommentLikes/CommentLikes";
 
 interface CommentAuthorProps {
     created: Date | string;
     likes: number;
     authorInfo: ResponseAuthor | undefined;
+    commentId: number;
 }
 
 const AuthorInfoContainer = styled.div`
@@ -50,26 +51,11 @@ const Date = styled.p`
     margin-bottom: 0;
 `;
 
-const LikesContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 150%; /* 22.5px */
-`;
-
-const LikesSpan = styled.span`
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%; /* 22.5px */
-`;
-
 export const CommentAuthor: FC<CommentAuthorProps> = ({
     created,
     likes,
     authorInfo,
+    commentId,
 }) => {
     const authorName = authorInfo ? authorInfo.name : "Unknown";
     const authorAvatar = authorInfo ? authorInfo.avatar : "Unknown";
@@ -84,10 +70,7 @@ export const CommentAuthor: FC<CommentAuthorProps> = ({
                 <AuthorTitle>{authorName}</AuthorTitle>
                 <Date>{formatedData}</Date>
             </CommentHeader>
-            <LikesContainer>
-                <LikeIcon />
-                <LikesSpan>{likes}</LikesSpan>
-            </LikesContainer>
+            <CommentLikes countLikes={likes} commentId={commentId} />
         </AuthorInfoContainer>
     );
 };

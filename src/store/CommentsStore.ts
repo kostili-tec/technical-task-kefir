@@ -36,12 +36,8 @@ class CommentsStore {
                 this.authors = authorsResponse;
                 this.pagination = commentsReposonse.pagination;
                 this.total.totalComments = this.comments.length;
-                this.total.totalLikes = this.comments.reduce(
-                    (total, comment) => total + comment.likes,
-                    0,
-                );
+                this.calculateLikes();
                 this.stateData = LoadingState.DONE;
-                console.log(this.pagination);
             });
         } catch (e) {
             runInAction(() => {
@@ -66,10 +62,7 @@ class CommentsStore {
                     this.comments.push(...sortedComments);
                     this.pagination = pagination;
                     this.total.totalComments = this.comments.length;
-                    this.total.totalLikes = this.comments.reduce(
-                        (total, comment) => total + comment.likes,
-                        0,
-                    );
+                    this.calculateLikes();
                     this.stateData = LoadingState.DONE;
                 });
             } catch (e) {
@@ -83,8 +76,39 @@ class CommentsStore {
         }
     }
 
+    likeComment(commentId: number) {
+        const commentIndex = this.comments.findIndex(
+            (comment) => comment.id === commentId,
+        );
+        if (commentIndex !== -1) {
+            this.comments[commentIndex].likes += 1;
+            this.calculateLikes();
+            return true;
+        }
+        return false;
+    }
+
+    unlikeComment(commentId: number) {
+        const commentIndex = this.comments.findIndex(
+            (comment) => comment.id === commentId,
+        );
+        if (commentIndex !== -1) {
+            this.comments[commentIndex].likes -= 1;
+            this.calculateLikes();
+            return true;
+        }
+        return false;
+    }
+
     getAuthor(id: number) {
         return this.authors.find((author) => author.id === id);
+    }
+
+    calculateLikes() {
+        this.total.totalLikes = this.comments.reduce(
+            (total, comment) => total + comment.likes,
+            0,
+        );
     }
 }
 
