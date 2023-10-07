@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/technical-task-kefir/static/css/main.e6c13ad2.css",
+    "main.js": "/technical-task-kefir/static/js/main.e1042c6f.js",
+    "static/media/kefir-bg-compressed.jpg": "/technical-task-kefir/static/media/kefir-bg-compressed.d3199b1961e19ff4ae15.jpg",
+    "static/media/han-solo.jpg": "/technical-task-kefir/static/media/han-solo.84705bac66e252072c67.jpg",
+    "static/media/heartSvgfill.svg": "/technical-task-kefir/static/media/heartSvgfill.81049c7060a0fde96675e7a9e850863f.svg",
+    "static/media/heartSvg.svg": "/technical-task-kefir/static/media/heartSvg.5111e6c41c015a057bd6a5f97fac9f4c.svg",
+    "index.html": "/technical-task-kefir/index.html",
+    "main.e6c13ad2.css.map": "/technical-task-kefir/static/css/main.e6c13ad2.css.map",
+    "main.e1042c6f.js.map": "/technical-task-kefir/static/js/main.e1042c6f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.e1042c6f.js"
+  ]
+}
