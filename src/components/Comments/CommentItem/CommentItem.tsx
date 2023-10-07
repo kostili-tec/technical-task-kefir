@@ -31,8 +31,6 @@ const CommentText = styled.p`
 export const CommentItem: FC<ResponseCommentData> = observer(
     ({author, text, created, likes, parent, id}) => {
         const marginValue = parent ? "34px" : "0";
-        const isHaveMargin = !!parent;
-        console.log(id, isHaveMargin);
         const authorInfo = CommentsStore.getAuthor(author);
         return (
             <CommentContainer $marginleft={marginValue}>
