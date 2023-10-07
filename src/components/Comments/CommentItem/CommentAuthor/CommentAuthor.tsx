@@ -16,9 +16,8 @@ interface CommentAuthorProps {
 const AuthorInfoContainer = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    gap: 20px;
 `;
 
 const AvatarContainer = styled.div`
@@ -27,6 +26,10 @@ const AvatarContainer = styled.div`
     position: relative;
     border-radius: 50%;
     overflow: hidden;
+    @media ${({theme}) => theme.media.medium} {
+        width: 40px;
+        height: 40px;
+    }
 `;
 
 const Avatar = styled.img`
@@ -36,6 +39,7 @@ const Avatar = styled.img`
 
 const CommentHeader = styled.div`
     flex-grow: 1;
+    margin-left: 20px;
 `;
 
 const AuthorTitle = styled.p`

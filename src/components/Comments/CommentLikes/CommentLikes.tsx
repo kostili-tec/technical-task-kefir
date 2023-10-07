@@ -18,10 +18,12 @@ const LikesContainer = styled.div`
     font-size: 15px;
     font-weight: 700;
     line-height: 150%; /* 22.5px */
+    @media ${({theme}) => theme.media.medium} {
+        font-size: 14px;
+    }
 `;
 
 const LikesSpan = styled.span`
-    font-size: 15px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%; /* 22.5px */

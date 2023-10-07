@@ -9,10 +9,10 @@ import {CommentsTotal} from "../CommentsTotal/CommentsTotal";
 import {PackmanSpinner} from "../../Spinner/PackmanSpinner";
 
 const List = styled.div`
-    max-width: 562px;
+    max-width: ${({theme}) => theme.sizes.dekstopWidth};
     display: flex;
     flex-direction: column;
-    margin-top: 2rem;
+    margin: 2rem 20px 0;
 `;
 
 export const CommentsList = observer(() => {

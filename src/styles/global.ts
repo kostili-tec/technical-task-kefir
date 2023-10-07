@@ -12,5 +12,10 @@ export default createGlobalStyle`
     background-attachment: fixed;
     color: ${baseTheme.colors.primary};
     font-family: 'Lato', sans-serif;
+    font-size: ${baseTheme.sizes.desktopFontSize};
+
+    @media screen and (${baseTheme.media.medium}) {
+      font-size: ${baseTheme.sizes.mobileFontSize};
+    }
   }
 `;

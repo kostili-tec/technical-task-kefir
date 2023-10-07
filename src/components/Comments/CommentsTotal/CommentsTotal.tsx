@@ -14,7 +14,6 @@ const TotalContainer = styled.div`
     margin-bottom: 32px;
 `;
 const Comments = styled.span`
-    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 22px; /* 137.5% */
