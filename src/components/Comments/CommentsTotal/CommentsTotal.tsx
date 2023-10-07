@@ -1,12 +1,9 @@
 import {FC} from "react";
 import styled from "styled-components";
+import {observer} from "mobx-react-lite";
 
+import CommentsStore from "src/store/CommentsStore";
 import {CommentLikes} from "../CommentLikes/CommentLikes";
-
-interface CommentsTotalProps {
-    countComments: number;
-    countLikes: number;
-}
 
 const TotalContainer = styled.div`
     display: flex;
@@ -23,14 +20,11 @@ const Comments = styled.span`
     line-height: 22px; /* 137.5% */
 `;
 
-export const CommentsTotal: FC<CommentsTotalProps> = ({
-    countComments,
-    countLikes,
-}) => {
+export const CommentsTotal: FC = observer(() => {
     return (
         <TotalContainer>
-            <Comments>{`${countComments} comments`}</Comments>
-            <CommentLikes countLikes={countLikes} />
+            <Comments>{`${CommentsStore.total.totalComments} comments`}</Comments>
+            <CommentLikes countLikes={CommentsStore.total.totalLikes} />
         </TotalContainer>
     );
-};
+});

@@ -7,10 +7,9 @@ import {formatData} from "src/shared/utils/dateFormater";
 import {ResponseAuthor} from "src/shared/types/types";
 
 interface CommentAuthorProps {
-    authorId: number;
     created: Date | string;
     likes: number;
-    getAuthor: (id: number) => ResponseAuthor | undefined;
+    authorInfo: ResponseAuthor | undefined;
 }
 
 const AuthorInfoContainer = styled.div`
@@ -68,12 +67,10 @@ const LikesSpan = styled.span`
 `;
 
 export const CommentAuthor: FC<CommentAuthorProps> = ({
-    authorId,
-    getAuthor,
     created,
     likes,
+    authorInfo,
 }) => {
-    const authorInfo = getAuthor(authorId);
     const authorName = authorInfo ? authorInfo.name : "Unknown";
     const authorAvatar = authorInfo ? authorInfo.avatar : "Unknown";
 

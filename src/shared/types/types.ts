@@ -33,3 +33,9 @@ export enum ApiUrls {
     AUTHORS = "/api/authors",
     COMMENTS = "/api/comments",
 }
+
+export enum LoadingState {
+    PENDING = "pending",
+    DONE = "done",
+    ERROR = "error",
+}

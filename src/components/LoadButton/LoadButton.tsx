@@ -1,13 +1,10 @@
 import styled from "styled-components";
+import {observer} from "mobx-react-lite";
 
+import CommentsStore from "src/store/CommentsStore";
 import {baseTheme} from "src/styles/theme";
 import {FC} from "react";
-
-interface LoadButtonProps {
-    onClick: () => Promise<void>;
-    isVisible: boolean;
-    isDisabled: boolean;
-}
+import {LoadingState} from "../../shared/types/types";
 
 interface LoadButtonStyledProps {
     $isVisible: boolean;
@@ -30,14 +27,16 @@ const Button = styled.button<LoadButtonStyledProps>`
     display: ${({$isVisible}) => ($isVisible ? "block" : "none")};
 `;
 
-export const LoadButton: FC<LoadButtonProps> = ({
-    onClick,
-    isVisible,
-    isDisabled,
-}) => {
+export const LoadButton: FC = observer(() => {
     return (
-        <Button $isVisible={isVisible} disabled={isDisabled} onClick={onClick}>
+        <Button
+            $isVisible={CommentsStore.comments.length ? true : false}
+            disabled={
+                CommentsStore.stateData === LoadingState.DONE ? false : true
+            }
+            onClick={() => CommentsStore.handleLoadComments()}
+        >
             Load more
         </Button>
     );
-};
+});
