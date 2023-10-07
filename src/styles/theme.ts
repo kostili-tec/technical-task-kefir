@@ -1,4 +1,4 @@
-import bgImage from "../assets/background/commentsBg.jpg";
+import bgImage from "../assets/background/kefir-bg-compressed.jpg";
 
 export const baseTheme = {
     colors: {

@@ -10,6 +10,7 @@ export default createGlobalStyle`
   body {
     background-image: url(${baseTheme.background.image});
     background-attachment: fixed;
+    background-position: center;
     color: ${baseTheme.colors.primary};
     font-family: 'Lato', sans-serif;
     font-size: ${baseTheme.sizes.desktopFontSize};
