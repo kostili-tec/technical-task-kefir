@@ -26,7 +26,7 @@ export const PackmanSpinner: FC<PackmanSpinnerProps> = ({isAbsolute}) => {
         <>
             {isAbsolute ? (
                 <SpinnerAbsolute>
-                    <PacmanLoader color="#e6eb00" size={50} />
+                    <PacmanLoader color="#e6eb00" size={40} />
                 </SpinnerAbsolute>
             ) : (
                 <SpinnerInline>
