@@ -4,7 +4,8 @@ export const baseTheme = {
     colors: {
         primary: "#FFFFFF",
         secondary: "#8297AB",
-        gray: "#313439",
+        grayButton: "#313439",
+        grayButtonHover: "#4f535c",
     },
 
     background: {

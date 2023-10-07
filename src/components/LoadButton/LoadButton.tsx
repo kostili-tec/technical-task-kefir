@@ -23,7 +23,7 @@ const Button = styled.button<LoadButtonStyledProps>`
     height: 36px;
     border: none;
     border-radius: 4px;
-    background: ${baseTheme.colors.gray};
+    background: ${baseTheme.colors.grayButton};
     backdrop-filter: blur(13.5px);
     color: ${baseTheme.colors.primary};
     font-size: 16px;
@@ -32,6 +32,10 @@ const Button = styled.button<LoadButtonStyledProps>`
     line-height: 22px; /* 137.5% */
     cursor: pointer;
     display: ${({$isVisible}) => ($isVisible ? "block" : "none")};
+    transition: ease-in 0.2s;
+    &:hover {
+        background: ${baseTheme.colors.grayButtonHover};
+    }
 `;
 
 export const LoadButton: FC = observer(() => {
