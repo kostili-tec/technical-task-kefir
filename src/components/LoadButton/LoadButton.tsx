@@ -5,10 +5,18 @@ import CommentsStore from "src/store/CommentsStore";
 import {baseTheme} from "src/styles/theme";
 import {FC} from "react";
 import {LoadingState} from "../../shared/types/types";
+import {PackmanSpinner} from "../Spinner/PackmanSpinner";
 
 interface LoadButtonStyledProps {
     $isVisible: boolean;
 }
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0 64px;
+`;
 
 const Button = styled.button<LoadButtonStyledProps>`
     width: 234px;
@@ -22,21 +30,29 @@ const Button = styled.button<LoadButtonStyledProps>`
     font-style: normal;
     font-weight: 400;
     line-height: 22px; /* 137.5% */
-    margin: 60px auto 64px;
     cursor: pointer;
     display: ${({$isVisible}) => ($isVisible ? "block" : "none")};
 `;
 
 export const LoadButton: FC = observer(() => {
     return (
-        <Button
-            $isVisible={CommentsStore.comments.length ? true : false}
-            disabled={
-                CommentsStore.stateData === LoadingState.DONE ? false : true
-            }
-            onClick={() => CommentsStore.handleLoadComments()}
-        >
-            Load more
-        </Button>
+        <ButtonContainer>
+            {CommentsStore.stateData === LoadingState.PENDING &&
+            CommentsStore.comments.length ? (
+                <PackmanSpinner />
+            ) : (
+                <Button
+                    $isVisible={CommentsStore.comments.length ? true : false}
+                    disabled={
+                        CommentsStore.stateData === LoadingState.DONE
+                            ? false
+                            : true
+                    }
+                    onClick={() => CommentsStore.handleLoadComments()}
+                >
+                    Load more
+                </Button>
+            )}
+        </ButtonContainer>
     );
 });
