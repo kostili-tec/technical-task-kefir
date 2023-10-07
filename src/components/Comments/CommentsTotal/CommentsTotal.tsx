@@ -23,7 +23,7 @@ const Comments = styled.span`
 export const CommentsTotal: FC = observer(() => {
     return (
         <>
-            {CommentsStore.comments.length && (
+            {!!CommentsStore.comments.length && (
                 <TotalContainer>
                     <Comments>{`${CommentsStore.total.totalComments} comments`}</Comments>
                     <CommentLikes countLikes={CommentsStore.total.totalLikes} />
