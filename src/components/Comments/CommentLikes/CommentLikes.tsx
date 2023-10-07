@@ -37,11 +37,11 @@ const LikeButton = styled.button<{$commentId: number | undefined}>`
 `;
 
 const StyledLikeIconFilled = styled(heartFillSVG)`
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     @media ${({theme}) => theme.media.medium} {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
 `;
 const StyledLikeIcon = styled(heartSVG)`
