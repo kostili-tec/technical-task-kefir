@@ -88,4 +88,6 @@ class CommentsStore {
     }
 }
 
-export default new CommentsStore();
+const commentsStore = new CommentsStore();
+
+export default commentsStore;
