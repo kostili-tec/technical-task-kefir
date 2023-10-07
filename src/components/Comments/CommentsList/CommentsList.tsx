@@ -1,28 +1,28 @@
 import styled from "styled-components";
 import {useState, useEffect, useMemo} from "react";
 
+import {CommentItem} from "../CommentItem/CommentItem";
+import {LoadButton} from "../../LoadButton/LoadButton";
+import {CommentsTotal} from "../CommentsTotal/CommentsTotal";
+import getAuthorsRequest from "src/api/authors/getAuthorsRequest";
+import getCommentsRequest from "src/api/comments/getCommentsRequest";
+import fetchCommentsWithRetry from "src/shared/utils/fetchCommentsWithRetry";
+import {sortCommentsByParent} from "src/shared/utils/sortComments";
 import {
     ResponseAuthor,
     ResponseCommentData,
     ResponseCommentPagination,
     ResponseComments,
-} from "../../../shared/types/types";
-import {CommentItem} from "../CommentItem/CommentItem";
-import getAuthorsRequest from "../../../api/authors/getAuthorsRequest";
-import getCommentsRequest from "../../../api/comments/getCommentsRequest";
-import {LoadButton} from "../../LoadButton/LoadButton";
-import fetchCommentsWithRetry from "../../../shared/utils/fetchCommentsWithRetry";
-import {CommentsTotal} from "../CommentsTotal/CommentsTotal";
-import {sortCommentsByParent} from "../../../shared/utils/sortComments";
+} from "src/shared/types/types";
 
-const Container = styled.div`
+const List = styled.div`
     max-width: 562px;
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
 `;
 
-export const CommentsContainer = () => {
+export const CommentsList = () => {
     const [comments, setComments] = useState<ResponseCommentData[]>([]);
     const [pagination, setPagination] = useState<ResponseCommentPagination>();
     const [authors, setAuthors] = useState<ResponseAuthor[]>([]);
@@ -124,7 +124,7 @@ export const CommentsContainer = () => {
     }, []);
 
     return (
-        <Container>
+        <List>
             <CommentsTotal
                 countComments={total.totalComments}
                 countLikes={total.totalLikes}
@@ -142,6 +142,6 @@ export const CommentsContainer = () => {
                 isDisabled={buttonProperties.isDisabled}
                 onClick={handleLoadMoreComments}
             />
-        </Container>
+        </List>
     );
 };

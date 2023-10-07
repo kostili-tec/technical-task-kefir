@@ -1,7 +1,7 @@
 import {FC} from "react";
 import styled from "styled-components";
 
-import {ResponseAuthor, ResponseCommentData} from "../../../shared/types/types";
+import {ResponseAuthor, ResponseCommentData} from "src/shared/types/types";
 import {CommentAuthor} from "./CommentAuthor/CommentAuthor";
 
 interface CommentItemProps extends ResponseCommentData {

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import {CommentsContainer} from "../../components/Comment/CommentsContainer/CommentsContainer";
+
+import {CommentsList} from "src/components/Comments/CommentsList/CommentsList";
 
 const Page = styled.section`
     display: flex;
@@ -11,7 +12,7 @@ const Page = styled.section`
 export const CommentsPage = () => {
     return (
         <Page>
-            <CommentsContainer />
+            <CommentsList />
         </Page>
     );
 };

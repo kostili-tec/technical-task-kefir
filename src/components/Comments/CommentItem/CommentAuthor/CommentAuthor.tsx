@@ -1,10 +1,10 @@
 import {FC} from "react";
 import styled from "styled-components";
 
-import {baseTheme} from "../../../../styles/theme";
 import {LikeIcon} from "../../../Icons/LikeIcon";
-import {ResponseAuthor} from "../../../../shared/types/types";
-import {formatData} from "../../../../shared/utils/dateFormater";
+import {baseTheme} from "src/styles/theme";
+import {formatData} from "src/shared/utils/dateFormater";
+import {ResponseAuthor} from "src/shared/types/types";
 
 interface CommentAuthorProps {
     authorId: number;
