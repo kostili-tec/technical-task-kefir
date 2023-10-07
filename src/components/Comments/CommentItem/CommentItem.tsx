@@ -10,7 +10,7 @@ const CommentContainer = styled.div<{$marginleft: string}>`
     margin-top: 16px;
     margin-left: ${({$marginleft}) => $marginleft};
 
-    @media (max-width: 720px) {
+    @media ${({theme}) => theme.media.medium} {
         ${({$marginleft}) =>
             $marginleft === "34px"
                 ? css`
