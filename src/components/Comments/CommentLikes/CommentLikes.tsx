@@ -3,8 +3,8 @@ import styled from "styled-components";
 import {observer} from "mobx-react-lite";
 
 import CommentsStore from "src/store/CommentsStore";
-import {LikeIcon} from "../../Icons/LikeIcon";
-import {LikeIconFilled} from "../../Icons/LikeIconFilled";
+import {ReactComponent as heartFillSVG} from "src/assets/svg/heartSvgfill.svg";
+import {ReactComponent as heartSVG} from "src/assets/svg/heartSvg.svg";
 
 interface CommentLikesProps {
     countLikes: number;
@@ -36,6 +36,23 @@ const LikeButton = styled.button<{$commentId: number | undefined}>`
     cursor: ${({$commentId}) => ($commentId ? "pointer" : "auto")};
 `;
 
+const StyledLikeIconFilled = styled(heartFillSVG)`
+    width: 24px;
+    height: 24px;
+    @media ${({theme}) => theme.media.medium} {
+        width: 22px;
+        height: 22px;
+    }
+`;
+const StyledLikeIcon = styled(heartSVG)`
+    width: 22px;
+    height: 22px;
+    @media ${({theme}) => theme.media.medium} {
+        width: 20px;
+        height: 20px;
+    }
+`;
+
 export const CommentLikes: FC<CommentLikesProps> = observer(
     ({countLikes, commentId}) => {
         const [isLiked, setIsLiked] = useState(false);
@@ -54,7 +71,7 @@ export const CommentLikes: FC<CommentLikesProps> = observer(
         return (
             <LikesContainer>
                 <LikeButton $commentId={commentId} onClick={handleLikeClick}>
-                    {isLiked ? <LikeIconFilled /> : <LikeIcon />}
+                    {isLiked ? <StyledLikeIconFilled /> : <StyledLikeIcon />}
                 </LikeButton>
                 <LikesSpan>{countLikes}</LikesSpan>
             </LikesContainer>
